@@ -11,6 +11,7 @@ public class RoadManager : MonoBehaviour
     private float speed = 30;
     private float position = 0;
     private List<RoadSegment> segments = new List<RoadSegment>();
+    private float globalStartAngle = 0;
 
     private void Start()
     {
@@ -22,15 +23,7 @@ public class RoadManager : MonoBehaviour
     {
         var movement = speed * Time.deltaTime;
         position += movement;
-
-        var curPosition = GetOffsetAtPosition(position);
-        var curAngle = GetAngleAtPosition(position);
-        foreach (var s in segments)
-        {
-            s.transform.position = Quaternion.AngleAxis(-curAngle, Vector3.up) * (GetOffsetAtPosition(s.position) - curPosition);
-            s.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(s.position) - curAngle, 0);
-        }
-        environment.transform.eulerAngles = new Vector3(0, -curAngle, 0);
+        UpdateSegmentPositions();
 
         if (segments[0].position + GetTotalLength() - position < zCutoffForward)
         {
@@ -43,6 +36,18 @@ public class RoadManager : MonoBehaviour
         }
     }
 
+    private void UpdateSegmentPositions()
+    {
+        var curPosition = GetOffsetAtPosition(position);
+        var curAngle = GetAngleAtPosition(position);
+        foreach (var s in segments)
+        {
+            s.transform.position = Quaternion.AngleAxis(-curAngle, Vector3.up) * (GetOffsetAtPosition(s.position) - curPosition);
+            s.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(s.position) - curAngle, 0);
+        }
+        environment.transform.eulerAngles = new Vector3(0, -curAngle, 0);
+    }
+
     void SpawnNewSegment()
     {
         var s = Instantiate<RoadSegment>(segmentPrefabs[Random.Range(0, segmentPrefabs.Length)]);   
@@ -51,12 +56,14 @@ public class RoadManager : MonoBehaviour
             s.position = GetTotalLength() + segments[0].position;
         }
         segments.Add(s);
+        UpdateSegmentPositions();
     }
 
     void RemoveSegment ()
     {
         if (segments.Count == 0) return;
         Destroy(segments[0].gameObject);
+        globalStartAngle += segments[0].curvature;
         segments.RemoveAt(0);
     }
 
@@ -85,7 +92,7 @@ public class RoadManager : MonoBehaviour
 
     float GetAngleAtPosition(float p)
     {
-        float a = 0;
+        float a = globalStartAngle;
         foreach (var s in segments)
         {
             a += s.GetBendAtPosition(Mathf.Min(s.length, p - s.position));
@@ -100,7 +107,7 @@ public class RoadManager : MonoBehaviour
     Vector3 GetOffsetAtPosition(float p)
     {
         Vector3 o = Vector3.zero;
-        float a = 0;
+        float a = globalStartAngle;
         foreach (var s in segments)
         {
             o += Quaternion.AngleAxis(a, Vector3.up) * s.GetOffsetAtPosition(Mathf.Min(s.length, p - s.position));
