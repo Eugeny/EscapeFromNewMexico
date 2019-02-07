@@ -6,7 +6,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     internal float speed = 25;
-    private RoadObject ro;
+    internal RoadObject ro;
 
     void Start()
     {

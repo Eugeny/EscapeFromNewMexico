@@ -11,9 +11,12 @@ public class RoadManager : MonoBehaviour
     private float zCutoffForward = 200;
     private float zCutoffBack = 100;
     private float speed = 30;
-    private float position = 0;
+    internal float position = 0;
     private List<RoadSegment> segments = new List<RoadSegment>();
     private float globalStartAngle = 0;
+
+    private float currentFrameAngle;
+    private Vector3 currentFrameOffset;
 
     private void Start()
     {
@@ -41,19 +44,18 @@ public class RoadManager : MonoBehaviour
 
     private void UpdateSegmentPositions()
     {
-        var curPosition = GetOffsetAtPosition(position);
-        var curAngle = GetAngleAtPosition(position);
+        currentFrameOffset = GetOffsetAtPosition(position);
+        currentFrameAngle = GetAngleAtPosition(position);
         foreach (var s in segments)
         {
-            s.transform.position = Quaternion.AngleAxis(-curAngle, Vector3.up) * (GetOffsetAtPosition(s.position) - curPosition);
-            s.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(s.position) - curAngle, 0);
+            s.transform.position = Quaternion.AngleAxis(-currentFrameAngle, Vector3.up) * (GetOffsetAtPosition(s.position) - currentFrameOffset);
+            s.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(s.position) - currentFrameAngle, 0);
         }
-        environment.transform.eulerAngles = new Vector3(0, -curAngle, 0);
+        environment.transform.eulerAngles = new Vector3(0, -currentFrameAngle, 0);
 
         foreach (var o in roadObjects)
         {
-            o.transform.position = Quaternion.AngleAxis(-curAngle, Vector3.up) * (GetOffsetAtPosition(o.position) - curPosition);
-            o.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(o.position) - curAngle, 0);
+            Reposition(o);
         }
     }
 
@@ -127,5 +129,16 @@ public class RoadManager : MonoBehaviour
             a += s.curvature;
         }
         return o;
+    }
+
+    public void Reposition(RoadObject o)
+    {
+        var a = GetAngleAtPosition(o.position);
+        o.transform.position = Quaternion.AngleAxis(-currentFrameAngle, Vector3.up) * (
+            GetOffsetAtPosition(o.position)
+            + Quaternion.AngleAxis(a, Vector3.up) * new Vector3(o.x, 0)
+            - currentFrameOffset
+        );
+        o.transform.eulerAngles = new Vector3(0, a - currentFrameAngle, 0);
     }
 }
