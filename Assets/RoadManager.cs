@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RoadManager : MonoBehaviour
 {
+    public static RoadManager instance;
     public RoadSegment[] segmentPrefabs;
+    public List<RoadObject> roadObjects = new List<RoadObject>();
     public Transform environment;
     private float zCutoffForward = 200;
     private float zCutoffBack = 100;
@@ -15,6 +17,7 @@ public class RoadManager : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         SpawnNewSegment();
         SpawnNewSegment();
     }
@@ -46,6 +49,12 @@ public class RoadManager : MonoBehaviour
             s.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(s.position) - curAngle, 0);
         }
         environment.transform.eulerAngles = new Vector3(0, -curAngle, 0);
+
+        foreach (var o in roadObjects)
+        {
+            o.transform.position = Quaternion.AngleAxis(-curAngle, Vector3.up) * (GetOffsetAtPosition(o.position) - curPosition);
+            o.transform.eulerAngles = new Vector3(0, GetAngleAtPosition(o.position) - curAngle, 0);
+        }
     }
 
     void SpawnNewSegment()
