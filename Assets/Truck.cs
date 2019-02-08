@@ -8,8 +8,8 @@ public class Truck : MonoBehaviour
     public static Truck instance;
     public Transform trailer;
     internal float x;
-    private float maxSideSpeed = 6;
-    private float sideAccel = 8;
+    private float maxSideSpeed = 9;
+    private float sideAccel = 12;
     internal float sideSpeed = 0;
     private float sideSpeedDamp;
 
