@@ -7,12 +7,12 @@ public class CarManager : MonoBehaviour
     public static CarManager instance;
     public Car carPrefab;
     private List<Car> cars = new List<Car>();
-    private float laneWidth = 6;
+    private float laneWidth = 3;
     private int lanes = 4;
     private float zCutoffForward = 200;
     private float zCutoffBack = 100;
     private float[] lastCarPosition;
-    private float[] laneSpeeds = { 40, 25, 20, 15 };
+    private float[] laneSpeeds = { 25, 20, 15, 10 };
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class CarManager : MonoBehaviour
             lastCarPosition[i] += laneSpeeds[i] * Time.deltaTime;
             if (lastCarPosition[i] - RoadManager.instance.position < zCutoffForward)
             {
-                SpawnCar(i, Random.Range(10f, 25f));
+                SpawnCar(i, Random.Range(20f, 45f));
             }
         }
 
@@ -44,7 +44,7 @@ public class CarManager : MonoBehaviour
     void SpawnCar(int lane, float distance)
     {
         float position = lastCarPosition[lane] + distance;
-        float x = laneWidth * (lane - lanes / 2f) + Random.Range(-laneWidth * 0.1f, laneWidth * 0.1f);
+        float x = laneWidth * (lane - (lanes - 1) / 2f) + Random.Range(-laneWidth * 0.1f, laneWidth * 0.1f);
         var car = Instantiate<Car>(carPrefab);
         car.GetComponent<RoadObject>().x = x;
         car.GetComponent<RoadObject>().position = position;

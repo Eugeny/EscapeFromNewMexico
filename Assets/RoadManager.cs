@@ -10,7 +10,6 @@ public class RoadManager : MonoBehaviour
     public Transform environment;
     private float zCutoffForward = 200;
     private float zCutoffBack = 100;
-    private float speed = 30;
     internal float position = 0;
     private List<RoadSegment> segments = new List<RoadSegment>();
     private float globalStartAngle = 0;
@@ -27,8 +26,6 @@ public class RoadManager : MonoBehaviour
 
     void Update()
     {
-        var movement = speed * Time.deltaTime;
-        position += movement;
         UpdateSegmentPositions();
 
         if (segments[0].position + GetTotalLength() - position < zCutoffForward)
