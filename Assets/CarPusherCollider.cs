@@ -30,6 +30,11 @@ public class CarPusherCollider : MonoBehaviour
         {
             (car.ro.x > truck.x ? particlesR : particlesL).enableEmission = true;
         }
+        if (other.gameObject.name == "FrontBumper" || other.gameObject.name == "RearBumper")
+        {
+            car = other.gameObject.GetComponentInParent<Car>();
+            Destroy(car.gameObject);
+        }
     }
 
     void OnTriggerStay(Collider other)
