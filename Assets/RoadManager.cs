@@ -12,10 +12,10 @@ public class RoadManager : MonoBehaviour
     private float zCutoffBack = 100;
     internal float position = 0;
     private List<RoadSegment> segments = new List<RoadSegment>();
-    private float globalStartAngle = 0;
+    internal float globalStartAngle = 0;
 
-    private float currentFrameAngle;
-    private Vector3 currentFrameOffset;
+    internal float currentFrameAngle;
+    internal Vector3 currentFrameOffset;
 
     private void Start()
     {
