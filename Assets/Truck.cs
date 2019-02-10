@@ -8,16 +8,19 @@ public class Truck : MonoBehaviour
     public static Truck instance;
     public Transform trailer;
     internal float x;
-    private float maxSideSpeed = 9;
+    private float maxSideSpeed = 12;
     private float sideAccel = 12;
     internal float sideSpeed = 0;
     private float sideSpeedDamp;
 
     internal float speed = 0;
+    internal const float minSpeed = 15;
+    internal const float maxSpeed = 50;
     internal float defaultSpeed = 30;
-    internal float speedD = 15;
-    private float speedDamp;
-    private float speedTarget;
+    internal float accel = 0;
+    internal const float maxAccel = 5;
+    private float accelDamp;
+    private float accelTarget;
 
     private float trailerAngle;
     private float trailerAngleDamp;
@@ -25,7 +28,6 @@ public class Truck : MonoBehaviour
     void Start()
     {
         instance = this;
-        speedTarget = speed;
     }
 
     // Update is called once per frame
@@ -34,12 +36,23 @@ public class Truck : MonoBehaviour
         var movement = speed * Time.deltaTime;
         RoadManager.instance.position += movement;
 
-        speedTarget = defaultSpeed + Input.GetAxis("Vertical") * speedD;
-        speed = Mathf.SmoothDamp(speed, speedTarget, ref speedDamp, 1f);
+        accelTarget = Input.GetAxis("Vertical") * maxAccel;
+        accel = Mathf.SmoothDamp(accel, accelTarget, ref accelDamp, 0.5f);
+        speed += accel * Time.deltaTime;
 
-        sideSpeed += Input.GetAxis("Horizontal") * Time.deltaTime * sideAccel;
+        speed = Mathf.Max(minSpeed, Mathf.Min(maxSpeed, speed));
+
+        float maxX = CarManager.instance.lanes * CarManager.instance.laneWidth / 2f;
+
+        if ((x > -maxX + 0.1f && Input.GetAxis("Horizontal") < 0) || (x < maxX - 0.1f && Input.GetAxis("Horizontal") > 0))
+        {
+            sideSpeed += Input.GetAxis("Horizontal") * Time.deltaTime * sideAccel;
+        }
+     
         sideSpeed = Math.Max(-maxSideSpeed, Math.Min(maxSideSpeed, sideSpeed));
         x += sideSpeed * Time.deltaTime;
+
+        x = Mathf.Min(maxX, Mathf.Max(-maxX, x));
 
         transform.position = new Vector3(x, 0, 0);
 

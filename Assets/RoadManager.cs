@@ -8,7 +8,7 @@ public class RoadManager : MonoBehaviour
     public RoadSegment[] segmentPrefabs;
     public List<RoadObject> roadObjects = new List<RoadObject>();
     public Transform environment;
-    private float zCutoffForward = 200;
+    private float zCutoffForward = 300;
     private float zCutoffBack = 100;
     internal float position = 0;
     private List<RoadSegment> segments = new List<RoadSegment>();
@@ -22,6 +22,7 @@ public class RoadManager : MonoBehaviour
         instance = this;
         SpawnNewSegment();
         SpawnNewSegment();
+        position += 50;
     }
 
     void Update()
@@ -33,7 +34,7 @@ public class RoadManager : MonoBehaviour
             SpawnNewSegment();
         }
 
-        if (position - segments[0].position > zCutoffBack)
+        if (position - segments[0].position - segments[0].length > zCutoffBack)
         {
             RemoveSegment();
         }

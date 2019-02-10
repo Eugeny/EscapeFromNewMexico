@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(RoadObject))]
 public class Car : MonoBehaviour
 {
+    public AudioClip[] crashSounds;
     internal float speed = 25;
     internal RoadObject ro;
     internal bool swerving = false;
@@ -13,6 +14,7 @@ public class Car : MonoBehaviour
     void Start()
     {
         ro = GetComponent<RoadObject>();
+        gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -29,8 +31,17 @@ public class Car : MonoBehaviour
 
     public void SwerveAway(int dir)
     {
-        swerving = true;
-        swerveDirection = dir;
+        if (!swerving)
+        {
+            if (Mathf.Abs(ro.position - RoadManager.instance.position) < 10)
+            {
+                GetComponent<AudioSource>().PlayOneShot(crashSounds[Random.Range(0, crashSounds.Length)]);
+                GetComponent<AudioSource>().pitch = Random.Range(0.8f, 1f);
+                GetComponent<AudioSource>().volume = 0.5f;
+            }
+            swerving = true;
+            swerveDirection = dir;
+        }
     }
 
 

@@ -7,8 +7,8 @@ public class CarManager : MonoBehaviour
     public static CarManager instance;
     public Car carPrefab;
     private List<Car> cars = new List<Car>();
-    private float laneWidth = 3;
-    private int lanes = 4;
+    internal float laneWidth = 3;
+    internal int lanes = 4;
     private float zCutoffForward = 200;
     private float zCutoffBack = 100;
     private float[] lastCarPosition;

@@ -112,6 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336667d5553f34480815d14bf110e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crashSounds:
+  - {fileID: 8300000, guid: cff375027426247e589080d2bf5fd4e5, type: 3}
+  - {fileID: 8300000, guid: af2e04bf7838c4020a3408f869f036ed, type: 3}
 --- !u!65 &1544057641913936511
 BoxCollider:
   m_ObjectHideFlags: 0

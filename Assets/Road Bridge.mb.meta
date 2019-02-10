@@ -1,27 +1,31 @@
 fileFormatVersion: 2
-guid: 677b25671108745f88c3b938560b7fb8
+guid: a7bb151b8d6e5483ea303117126f17e4
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: bend1Handle
-    100002: pPlane1
+    100000: pPlane1
+    100002: pPlane2
     100004: //RootNode
-    100006: bend2Handle
-    100008: group
-    100010: pasted__pPlane2
-    400000: bend1Handle
-    400002: pPlane1
+    100006: pCube1
+    100008: pPlane3
+    400000: pPlane1
+    400002: pPlane2
     400004: //RootNode
-    400006: bend2Handle
-    400008: group
-    400010: pasted__pPlane2
+    400006: pCube1
+    400008: pPlane3
     2100000: lambert1
     2300000: pPlane1
-    2300002: pasted__pPlane2
+    2300002: pPlane2
+    2300004: pCube1
+    2300006: pPlane3
     3300000: pPlane1
-    3300002: pasted__pPlane2
+    3300002: pPlane2
+    3300004: pCube1
+    3300006: pPlane3
     4300000: pPlane1
-    4300002: pasted__pPlane2
+    4300002: pPlane2
+    4300004: pCube1
+    4300006: pPlane3
   externalObjects: {}
   materials:
     importMaterials: 1

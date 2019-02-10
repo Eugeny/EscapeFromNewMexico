@@ -270,7 +270,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.4878509, b: 0, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -304,13 +304,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.104421996, y: -0.7992618, z: 0.06385264, w: 0.58838725}
+  m_LocalRotation: {x: 0.14958723, y: -0.78746194, z: 0.12685798, w: 0.58432394}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1901531387}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 13, y: -107.898, z: -5.405}
+  m_LocalEulerAnglesHint: {x: 22, y: -107.898, z: -5.405}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,8 +347,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.43529415, g: 0.2784314, b: 0.14117648, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -361,7 +361,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 10
-  far clip plane: 100
+  far clip plane: 200
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -442,6 +442,7 @@ MonoBehaviour:
   - {fileID: 4640482178441843248, guid: 26830c3539c924d34bf997a1257f349c, type: 3}
   - {fileID: 4640482178441843248, guid: 0d73ed2f16dd248a7b17b5088fb0d276, type: 3}
   - {fileID: 4640482178441843248, guid: 47ed77d6797dd41ff9a8188ce648dd56, type: 3}
+  - {fileID: 4640482178441843248, guid: 874c71580bca3457995307ebe7172557, type: 3}
   roadObjects: []
   environment: {fileID: 1901531387}
 --- !u!4 &1154286688
@@ -14633,7 +14634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.86
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14673,15 +14674,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.35964692
+      value: 0.4452069
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.35964692
+      value: 0.4452069
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.35964692
+      value: 0.4452069
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7d9c6fcdd6534f5f8048b9a396a8b50, type: 3}
