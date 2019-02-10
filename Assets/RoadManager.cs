@@ -136,6 +136,6 @@ public class RoadManager : MonoBehaviour
             + Quaternion.AngleAxis(a, Vector3.up) * new Vector3(o.x, 0)
             - currentFrameOffset
         );
-        o.transform.eulerAngles = new Vector3(0, a - currentFrameAngle, 0);
+        o.transform.eulerAngles = new Vector3(0, a - currentFrameAngle + o.rotation, 0);
     }
 }

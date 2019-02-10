@@ -33,14 +33,18 @@ public class CarPusherCollider : MonoBehaviour
         if (other.gameObject.name == "FrontBumper" || other.gameObject.name == "RearBumper")
         {
             car = other.gameObject.GetComponentInParent<Car>();
-            Destroy(car.gameObject);
+            if (!car.swerving)
+            {
+                car.SwerveAway((int)Mathf.Sign(car.ro.x - truck.x));
+                truck.speed *= 0.5f;
+            }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
         var car = other.GetComponent<Car>();
-        if (car != null)
+        if (car != null && !car.swerving)
         {
             car.ro.x += Mathf.Abs(truck.sideSpeed) * Mathf.Sign(car.ro.x - truck.x) * Time.deltaTime * 3;
         }

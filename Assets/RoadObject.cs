@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoadObject : MonoBehaviour
 {
     public float position;
-    public float x;
+    public float x, rotation;
 
     void Start()
     {

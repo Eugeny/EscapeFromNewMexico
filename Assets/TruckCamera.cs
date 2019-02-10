@@ -7,6 +7,9 @@ public class TruckCamera : MonoBehaviour
     public float maxOffset;
     private Vector3 pos, rot;
 
+    private float offset;
+    private float offsetDamp;
+
     private float angle;
     private float angleDamp;
 
@@ -20,7 +23,9 @@ public class TruckCamera : MonoBehaviour
     {
         angle = Mathf.SmoothDampAngle(angle, RoadManager.instance.currentFrameAngle, ref angleDamp, 1f);
 
-        var offset = (Truck.instance.speed - Truck.instance.defaultSpeed) / Truck.instance.speedD;
+        var offsetTarget = (Truck.instance.speed - Truck.instance.defaultSpeed) / Truck.instance.speedD;
+        offset = Mathf.SmoothDamp(offset, offsetTarget, ref offsetDamp, 0.25f);
+
         var offsetAngle = angle - RoadManager.instance.currentFrameAngle;
         transform.position = Quaternion.AngleAxis(-offsetAngle, Vector3.up) * (pos + new Vector3(0, -offset, -offset) * maxOffset);
 
