@@ -25,6 +25,8 @@ public class Truck : MonoBehaviour
     private float trailerAngle;
     private float trailerAngleDamp;
 
+    public AudioSource bottleClinkSound;
+
     void Start()
     {
         instance = this;
@@ -83,6 +85,7 @@ public class Truck : MonoBehaviour
         var bw = other.GetComponentInParent<BoozeWagon>();
         if (bw != null)
         {
+            bottleClinkSound.Play();
             Game.instance.AddBottles(bw.bottles);
             Destroy(other.gameObject);
         }

@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
     void Start()
     {
         instance = this;
+        gameOver = false;
         startTime = Time.time;
         drinkingSpeed = 0.5f;
     }
@@ -115,6 +116,6 @@ public class Game : MonoBehaviour
 
     public void Restart ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
