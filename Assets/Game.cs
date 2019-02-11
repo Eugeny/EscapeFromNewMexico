@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
     public static Game instance;
-    internal bool gameOver;
+    internal static bool gameOver;
 
     private float startTime;
     public Text distanceText;
@@ -14,6 +16,10 @@ public class Game : MonoBehaviour
     public Text bottlesText;
     public Image bottleMeterBG;
     public RectTransform bottleMeter;
+    public Text bottlePlusText;
+
+    public PlayableDirector director;
+    public PlayableAsset bottlePlusTimeline, gameOverTimeline;
 
     private float bottleContent = 1;
     private float drinkingSpeed = 0.05f;
@@ -21,6 +27,13 @@ public class Game : MonoBehaviour
 
     private float bottleMeterY, bottleMeterYDamp, bottleMeterYTarget = 0;
     private bool bottleChecksEnabled = true;
+
+    private float finalScore = 0;
+
+    internal float drunkFactor = 0;
+    internal float drunkInput;
+    private float drunkFactorAccel = 0.1f;
+    private float drunkInputTimeFactor = 0.1f;
 
     void Start()
     {
@@ -55,7 +68,21 @@ public class Game : MonoBehaviour
 
             bottlesText.text = "x" + bottlesLeft.ToString();
         }
+
+
+        var t = Time.time * drunkInputTimeFactor;
+        drunkInput = Mathf.Sin(t * 3) + Mathf.Sin(t * 5) + Mathf.Sin(t * 13) + Mathf.Sin(t * 23);
+        drunkInput *= drunkFactor;
+
+        drunkFactor += Time.deltaTime * drunkFactorAccel;
     }
+
+    public void AddBottles(int bottles)
+    {
+        bottlesLeft += bottles;
+        bottlePlusText.text = "+" + bottles;
+        director.Play(bottlePlusTimeline);
+   }
 
     IEnumerator SwapBottles ()
     {
@@ -71,12 +98,23 @@ public class Game : MonoBehaviour
 
     float GetDistanceCovered ()
     {
+        if (finalScore != 0)
+        {
+            return finalScore;
+        }
         return RoadManager.instance.position / 1000;
     }
 
     void GameOver ()
     {
+        director.Play(gameOverTimeline);
+        finalScore = GetDistanceCovered();
         gameOver = true;
         Debug.Log("Game over");
+    }
+
+    public void Restart ()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

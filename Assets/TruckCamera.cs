@@ -30,6 +30,6 @@ public class TruckCamera : MonoBehaviour
         offsetAngle /= 2;
         transform.position = Quaternion.AngleAxis(-offsetAngle, Vector3.up) * (pos + new Vector3(0, -offset, -offset) * maxOffset);
 
-        transform.eulerAngles = rot - new Vector3(0, offsetAngle, 0);
+        transform.eulerAngles = rot - new Vector3(0, offsetAngle, Game.instance.drunkInput * 0.5f);
     }
 }

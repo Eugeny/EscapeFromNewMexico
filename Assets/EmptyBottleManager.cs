@@ -16,7 +16,7 @@ public class EmptyBottleManager : MonoBehaviour
     public void SpawnBottle()
     {
         var bottle = Instantiate(bottlePrefab, transform.position + spawnPoint, Quaternion.Euler(0, 0, Random.Range(0, 360)), transform);
-       // bottle.GetComponent<Rigidbody>().AddForce(Vector3.down, ForceMode.Impulse);
+        bottle.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, Random.Range(-10, 10)));
     }
 
     public void Shake()
