@@ -36,9 +36,15 @@ public class CarPusherCollider : MonoBehaviour
             if (!car.swerving)
             {
                 car.SwerveAway((int)Mathf.Sign(car.ro.x - truck.x));
-                truck.speed *= 0.5f;
+                Hit();
             }
         }
+    }
+
+    void Hit()
+    {
+        truck.speed *= 0.5f;
+        EmptyBottleManager.instance.Shake();
     }
 
     void OnTriggerStay(Collider other)
